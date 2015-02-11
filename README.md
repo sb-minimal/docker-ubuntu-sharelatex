@@ -4,6 +4,7 @@ docker-ubuntu-sharelatex
 Minimal Docker Image running ShareLaTeX
 
 Run it using
+
 ```
 docker run -d -p 3000:3000 sbminimal/docker-ubuntu-sharelatex
 ```
