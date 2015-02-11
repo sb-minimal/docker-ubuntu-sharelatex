@@ -1,0 +1,66 @@
+#!/bin/bash
+
+REALLY_DO_THIS=$1
+
+if [ "$REALLY_DO_THIS" != "-f" ]; then
+	echo "better not call me by hand!"
+	exit
+fi
+
+function containsElement {
+  local e
+  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+  return 1
+}
+
+function clean_bin {
+	local BINDIR
+	local KEEPFILES
+	local F
+	BINDIR=$1
+	KEEPFILES=${@:2}
+	for F in `ls $BINDIR`; do
+		if containsElement $F rm $KEEPFILES; then
+			echo keeping $F
+		else
+			echo deleting $F
+			rm $BINDIR/$F
+		fi
+	done
+	if ! containsElement rm $KEEPFILES; then
+		rm $BINDIR/rm
+	fi
+}
+
+rm -rf /boot
+rm -rf /etc/apt
+rm -rf /etc/dpkg
+rm -rf /etc/X11
+rm -rf /etc/yum
+rm -rf /var/cache/yum
+rm -rf /var/cache/apt
+rm -rf /var/cache/debconf
+rm -rf /var/lib/apt
+rm -rf /var/lib/dpkg
+rm -rf /var/lib/rpm
+rm -rf /var/lib/yum
+rm -rf /usr/lib/apt
+rm -rf /usr/lib/dpkg
+rm -rf /usr/lib/initramfs-tools
+rm -rf /usr/share/apt
+rm -rf /usr/share/dpkg
+rm -rf /usr/share/initramfs-tools
+rm -rf /usr/share/doc*
+rm -rf /usr/share/man
+
+
+#rm -rf /usr/lib/perl*
+#rm -rf /usr/share/perl*
+rm -rf /usr/lib/python*
+
+clean_bin /usr/bin ${@:2}
+clean_bin /sbin ${@:2}
+clean_bin /usr/sbin ${@:2}
+clean_bin /bin ${@:2}
+
+

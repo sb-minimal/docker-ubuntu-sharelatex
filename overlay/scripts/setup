@@ -1,0 +1,30 @@
+#!/bin/bash
+
+apt-get update
+apt-get -y install npm git mongodb-server redis-server wget sudo paxctl aspell-de aspell-en  lsb-release netcat
+apt-get -y upgrade
+
+ln -s /usr/bin/nodejs /usr/bin/node
+paxctl -Cm /usr/bin/nodejs
+
+cd /
+git clone https://github.com/scottkosty/install-tl-ubuntu.git
+cd install-tl-ubuntu
+TLREPO=http://mirrors.fe.up.pt/pub/CTAN/ ./install-tl-ubuntu
+
+cd /
+git clone https://github.com/sharelatex/sharelatex.git
+cd sharelatex
+git checkout v0.1.1
+npm install
+npm install -g grunt-cli
+grunt install
+
+chown root:root -R /usr/local/
+
+chmod +x /usr/bin/sharelatex.sh
+
+mkdir -p /data
+addgroup --gid 1000 sharelatex
+adduser --system --home /data --no-create-home --uid 1000 --group sharelatex
+chown sharelatex:sharelatex /data
