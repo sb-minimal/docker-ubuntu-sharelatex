@@ -31,5 +31,8 @@ chown sharelatex:sharelatex -R /data
 cd /data
 mongod & 
 
+# start nginx (will fork to sharelatex user by itself)
+nginx &
+
 exec sudo -H -u sharelatex -g sharelatex /usr/bin/sharelatex.sh
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get -y install npm git mongodb-server redis-server wget sudo paxctl aspell-de aspell-en  lsb-release netcat
+apt-get -y install npm git mongodb-server redis-server wget sudo paxctl aspell-de aspell-en  lsb-release netcat nginx zlib1g-dev
 apt-get -y upgrade
 
 ln -s /usr/bin/nodejs /usr/bin/node
@@ -15,10 +15,15 @@ TLREPO=http://mirrors.fe.up.pt/pub/CTAN/ ./install-tl-ubuntu
 cd /
 git clone https://github.com/sharelatex/sharelatex.git
 cd sharelatex
-git checkout v0.1.1
+git checkout v0.1.2
 npm install
 npm install -g grunt-cli
 grunt install
+
+patch -p0 < /scripts/settings.patch 
+
+cd /sharelatex/web
+grunt compile:minify
 
 chown root:root -R /usr/local/
 
@@ -28,3 +33,6 @@ mkdir -p /data
 addgroup --gid 1000 sharelatex
 adduser --system --home /data --no-create-home --uid 1000 --group sharelatex
 chown sharelatex:sharelatex /data
+
+rm /etc/nginx/sites-enabled/default
+mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf

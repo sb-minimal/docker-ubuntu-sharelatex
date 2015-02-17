@@ -1,0 +1,51 @@
+ 
+settings.patch 
+--- config/settings.development.coffee	2015-02-17 12:39:35.000000000 +0000
++++ config/settings.development.coffee.new	2015-02-17 15:38:50.864913561 +0000
+@@ -7,8 +7,11 @@
+ httpAuthUsers = {}
+ httpAuthUsers[httpAuthUser] = httpAuthPass
+ 
+-DATA_DIR = Path.resolve(Path.join(__dirname, "..", "data"))
+-TMP_DIR = Path.resolve(Path.join(__dirname, "..", "tmp"))
++#DATA_DIR = Path.resolve(Path.join(__dirname, "..", "data"))
++#TMP_DIR = Path.resolve(Path.join(__dirname, "..", "tmp"))
++DATA_DIR = Path.resolve(Path.join("/data"))
++TMP_DIR = Path.resolve(Path.join("/data/tmp"))
++
+ 
+ module.exports =
+ 	# Databases
+@@ -92,6 +95,8 @@
+ 	# Where your instance of ShareLaTeX can be found publicly. This is used
+ 	# when emails are sent out and in generated links:
+ 	siteUrl : 'http://localhost:3000'
++	websocketsUrl: 'http://localhost:3000'
++
+ 	
+ 	# If provided, a sessionSecret is used to sign cookies so that they cannot be
+ 	# spoofed. This is recommended.
+@@ -105,12 +110,12 @@
+ 	# Should javascript assets be served minified or not. Note that you will
+ 	# need to run `grunt compile:minify` within the web-sharelatex directory
+ 	# to generate these.
+-	useMinifiedJs: false
++	useMinifiedJs: true
+ 
+ 	# Should static assets be sent with a header to tell the browser to cache
+ 	# them. This should be false in development where changes are being made,
+ 	# but should be set to true in production.
+-	cacheStaticAssets: false
++	cacheStaticAssets: true
+ 
+ 	# If you are running ShareLaTeX over https, set this to true to send the
+ 	# cookie with a secure flag (recommended).
+@@ -119,7 +124,7 @@
+ 	# If you are running ShareLaTeX behind a proxy (like Apache, Nginx, etc)
+ 	# then set this to true to allow it to correctly detect the forwarded IP
+ 	# address and http/https protocol information.
+-	behindProxy: false
++	behindProxy: true
+ 
+ 	# Sending Email
+ 	# -------------
