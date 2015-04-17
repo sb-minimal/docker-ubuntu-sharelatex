@@ -15,7 +15,7 @@ TLREPO=http://mirrors.fe.up.pt/pub/CTAN/ ./install-tl-ubuntu
 cd /
 git clone https://github.com/sharelatex/sharelatex.git
 cd sharelatex
-git checkout v0.1.2
+git checkout v0.1.4
 npm install
 npm install -g grunt-cli
 grunt install
