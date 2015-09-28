@@ -7,6 +7,12 @@
 #        SHARELATEX_GID=1000
 #fi
 
+if [ -z "$MONGOD_SMALLFILES" ]; then
+	MONGOD_SMALLFILES=""
+else
+	MONGOD_SMALLFILES="--smallfiles"
+fi
+
 #addgroup --gid $SHARELATEX_GID sharelatex
 #adduser --system --home /data --no-create-home --uid $SHARELATEX_GID --group sharelatex
 
@@ -26,10 +32,10 @@ ln -s /data/redis /var/lib/redis
 chown sharelatex:sharelatex -R /data
 #chown sharelatex:sharelatex -R /sharelatex
 
-# HACK: 
+# HACK:
 # start mongod as root, as it wont run fine as user?
 cd /data
-mongod & 
+mongod $MONGOD_SMALLFILES &
 
 # start nginx (will fork to sharelatex user by itself)
 nginx &

@@ -24,3 +24,7 @@ If you intend to change this, you should change /sharelatex/config/settings.deve
 ```
 docker exec -it CONTAINER_ID /create-admin-user.sh ADMIN-EMAIL-ADDRESS
 ```
+
+> You might want to add smallfiles = true to /etc/mongodb.conf inside the container for smaller setups, or start the container with -D MONGOD_SMALLFILES=true.
+
+
